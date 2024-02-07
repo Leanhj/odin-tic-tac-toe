@@ -85,6 +85,83 @@ function GameController(
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
+    let turns = 0;
+    const getTurns = () => turns;
+
+    const increaseTurns = () => turns++;
+
+    const checkWin = () => {
+        let tempBoard = board.getBoard();
+
+        let rowSums = [];
+
+        for (let i = 0; i < 3; i++) {
+            let rowSum = 0;
+            for (let j = 0; j < 3; j++) {
+                if (tempBoard[i][j].getValue() === 0) {
+                    rowSum += 10;
+                } else {
+                    rowSum += tempBoard[i][j].getValue();
+                }
+            }
+            rowSums.push(rowSum);
+        }
+
+        let filteredRowSums = rowSums.filter((sum) => (sum === 3 || sum === 6));
+        if (filteredRowSums.length > 0) {
+            return true;
+        }
+
+        let colSums = [];
+
+        for (let i = 0; i < 3; i++) {
+            let colSum = 0;
+            for (let j = 0; j < 3; j++) {
+                if (tempBoard[j][i].getValue() === 0) {
+                    colSum += 10;
+                } else {
+                    colSum += tempBoard[j][i].getValue();
+                }
+            }
+            colSums.push(colSum);
+        }
+
+        let filteredColSums = colSums.filter((sum) => (sum === 3 || sum === 6));
+        if (filteredColSums.length > 0) {
+            return true;
+        }
+
+        let diagSum = 0;
+
+        for (let i = 0; i < 3; i++) {
+            if (tempBoard[i][i].getValue() === 0) {
+                diagSum += 10;
+            } else {
+                diagSum += tempBoard[i][i].getValue();
+            }
+        }
+
+        if (diagSum === 3 || diagSum === 6) {
+            return true;
+        }
+
+        let antidiagSum = 0;
+
+        for (let i = 0; i < 3; i++) {
+            if (tempBoard[i][2-i].getValue() === 0) {
+                antidiagSum += 10;
+            } else {
+                antidiagSum += tempBoard[i][2-i].getValue();
+            }
+        }
+
+        if (antidiagSum === 3 || antidiagSum === 6) {
+            return true;
+        }
+
+        return false;
+    };
+
     const playRound = (row, column) => {
         while (true) {
             if (board.legalMove(row, column)) {
@@ -99,9 +176,31 @@ function GameController(
         row ${row} and column ${column}`);
         board.makeMove(row, column, getActivePlayer().token);
 
-        switchPlayerTurn();
-        printNewRound();
+        increaseTurns();
+        if (getTurns() >= 5) {
+            if (checkWin()) {
+                printWinner(getActivePlayer().name);
+            } else {
+                if (turns === 9) {
+                    printDraw();
+                } else {
+                    switchPlayerTurn();
+                    printNewRound();
+                }
+            }
+        } else {
+            switchPlayerTurn();
+            printNewRound();
+        }
     };
+
+    const printDraw = () => {
+        console.log("It's a draw");
+    };
+
+    const printWinner = (name) => {
+        console.log(`${name} is the winner!`);
+    }
 
     printNewRound();
 
