@@ -230,7 +230,18 @@ function ScreenController() {
                 cellButton.classList.add("cell");
                 cellButton.dataset.row = i;
                 cellButton.dataset.column = j;
-                cellButton.textContent = cell.getValue();
+                cellContent = cell.getValue();
+                switch (cellContent) {
+                    case 0:
+                        cellContent = "";
+                        break;
+                    case 1:
+                        cellContent = "X";
+                        break;
+                    case 2:
+                        cellContent = "O";
+                }
+                cellButton.textContent = cellContent;
                 boardDiv.appendChild(cellButton);
             });
         });
