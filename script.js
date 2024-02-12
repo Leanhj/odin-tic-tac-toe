@@ -212,8 +212,8 @@ function GameController(
     }
 }
 
-function ScreenController() {
-    let game = GameController();
+function ScreenController(p1Name, p2Name) {
+    let game = GameController(p1Name, p2Name);
     const playerTurnDiv = document.querySelector(".turn");
     const boardDiv = document.querySelector(".board");
     const dialogWin = document.querySelector(".victory");
@@ -269,11 +269,25 @@ function ScreenController() {
 
     newGameButton.addEventListener("click", () => {
         dialogWin.close();
-        game = GameController();
+        game = GameController(p1Name, p2Name);
         updateScreen();
     });
 
     updateScreen();
 }
 
-ScreenController();
+const startDialog = document.querySelector(".game-start");
+const form = document.querySelector("#form");
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const myFormData = new FormData(e.target);
+
+    const formDataObj = Object.fromEntries(myFormData.entries());
+    startDialog.close();
+
+    const p1 = formDataObj["p1"];
+    const p2 = formDataObj["p2"];
+
+    ScreenController(p1, p2);
+});
+startDialog.showModal();
