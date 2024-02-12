@@ -207,14 +207,18 @@ function GameController(
     return {
         playRound,
         getActivePlayer,
-        getBoard: board.getBoard
+        getBoard: board.getBoard,
+        checkWin
     }
 }
 
 function ScreenController() {
-    const game = GameController();
+    let game = GameController();
     const playerTurnDiv = document.querySelector(".turn");
     const boardDiv = document.querySelector(".board");
+    const dialogWin = document.querySelector(".victory");
+    const winText = document.querySelector(".winner-text");
+    const newGameButton = document.querySelector(".new-game");
 
     const updateScreen = () => {
         boardDiv.textContent = "";
@@ -224,27 +228,32 @@ function ScreenController() {
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
-        board.forEach((row, i) => {
-            row.forEach((cell, j) => {
-                const cellButton = document.createElement("button");
-                cellButton.classList.add("cell");
-                cellButton.dataset.row = i;
-                cellButton.dataset.column = j;
-                cellContent = cell.getValue();
-                switch (cellContent) {
-                    case 0:
-                        cellContent = "";
-                        break;
-                    case 1:
-                        cellContent = "X";
-                        break;
-                    case 2:
-                        cellContent = "O";
-                }
-                cellButton.textContent = cellContent;
-                boardDiv.appendChild(cellButton);
+        if (game.checkWin()) {
+            dialogWin.showModal();
+            winText.textContent = `${activePlayer.name} wins!`;
+        } else {
+            board.forEach((row, i) => {
+                row.forEach((cell, j) => {
+                    const cellButton = document.createElement("button");
+                    cellButton.classList.add("cell");
+                    cellButton.dataset.row = i;
+                    cellButton.dataset.column = j;
+                    cellContent = cell.getValue();
+                    switch (cellContent) {
+                        case 0:
+                            cellContent = "";
+                            break;
+                        case 1:
+                            cellContent = "X";
+                            break;
+                        case 2:
+                            cellContent = "O";
+                    }
+                    cellButton.textContent = cellContent;
+                    boardDiv.appendChild(cellButton);
+                });
             });
-        });
+        }
     };
 
     function clickHandlerBoard(e) {
@@ -257,6 +266,12 @@ function ScreenController() {
         updateScreen();
     }
     boardDiv.addEventListener("click", clickHandlerBoard);
+
+    newGameButton.addEventListener("click", () => {
+        dialogWin.close();
+        game = GameController();
+        updateScreen();
+    });
 
     updateScreen();
 }
