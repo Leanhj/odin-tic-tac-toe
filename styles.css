@@ -1,3 +1,22 @@
+* {
+    font-family: 'Readex Pro', sans-serif;
+    color: var(--text);
+}
+
+:root {
+    --background: #0c1c1a;
+    --primary: #9cdcd5;
+    --secondary: #26847a;
+    --accent: #33d1c0;
+    --text: #e9f4f3;
+}
+
+body {
+    background-color: var(--background);
+    margin: 0;
+    padding: 0;
+}
+
 .board {
     display: grid;
     height: 500px;
@@ -7,16 +26,101 @@
     border: 1px solid black;
     gap: 2px;
     padding: 2px;
-    background-color: yellow;
-  }
+    background-color: var(--primary);
+}
   
-  .cell {
+.cell {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 2rem;
-    border: 1px solid grey;
-    background: lightyellow;
+    border: 1px solid var(--primary);
+    background: var(--background);
     cursor: pointer;
-  }
+}
+
+dialog {
+    border-radius: 4px;
+    border: 2px solid var(--accent);
+    background-color: var(--background);
+}
+
+dialog::backdrop {
+    background-color: black;
+    opacity: 0.9;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+input[type="text"] {
+    border-radius: 4px;
+    border: 2px solid var(--accent);
+    background-color: var(--background);
+    width: 30vw;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-radius: 4px;
+    outline-color: var(--accent);
+    background-color: var(--background);
+    width: 30vw;
+}
+
+#submit-row {
+    justify-content: center;
+}
+
+button[type="submit"] {
+    height: 2rem;
+    width: 10vw;
+    border-radius: 4px;
+    border: 2px solid var(--secondary);
+    background-color: var(--secondary);
+    cursor: pointer;
+}
+
+.container {
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.turn {
+    padding: 1rem;
+    font-size: large;
+    font-weight: bold;
+}
+
+.victory-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.winner-text {
+    font-size: large;
+    font-weight: bold;
+}
+
+.new-game {
+    height: 2rem;
+    width: 10vw;
+    border-radius: 4px;
+    border: 2px solid var(--secondary);
+    background-color: var(--secondary);
+    cursor: pointer;
+}

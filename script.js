@@ -208,7 +208,8 @@ function GameController(
         playRound,
         getActivePlayer,
         getBoard: board.getBoard,
-        checkWin
+        checkWin,
+        getTurns
     }
 }
 
@@ -231,6 +232,9 @@ function ScreenController(p1Name, p2Name) {
         if (game.checkWin()) {
             dialogWin.showModal();
             winText.textContent = `${activePlayer.name} wins!`;
+        } if (game.getTurns() === 9) {
+            dialogWin.showModal();
+            winText.textContent = "It's a draw!";
         } else {
             board.forEach((row, i) => {
                 row.forEach((cell, j) => {

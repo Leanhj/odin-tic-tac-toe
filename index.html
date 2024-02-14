@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic-Tac-Toe</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
 </head>
 <body>
   <script src="./script.js" defer></script>
@@ -18,14 +21,16 @@
         <label for="p2-name">Player 2 name</label>
         <input type="text" id="p2-name" name="p2" required>
       </div>
-      <div class="form-row">
+      <div class="form-row" id="submit-row">
         <button type="submit" class="start">Start</button>
       </div>
     </form>
   </dialog>
   <dialog class="victory">
-    <div class="winner-text"></div>
-    <button class="new-game">New Game</button>
+    <div class="victory-wrapper">
+      <div class="winner-text"></div>
+      <button class="new-game">New Game</button>
+    </div>
   </dialog>
   <div class="container">
     <div class="turn"></div>
